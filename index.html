@@ -1,0 +1,697 @@
+<html>
+<head>
+  <base href="https://theliminaltimes/issue2">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Liminal Times - Issue #2 - Exploring Abandoned and Liminal Spaces</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+    body {
+      font-family: "EB Garamond", serif;
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/paper_fibers.png) repeat;
+      color: #1c1f33;
+      line-height: 1.3;
+      cursor: default;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container-fluid {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0.5rem;
+    }
+
+    header {
+      padding: 0.5rem 0;
+      text-align: center;
+      border-bottom: 2px solid #1c1f33;
+      position: relative; 
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .issue-info {
+      font-size: 1rem;
+      color: #1c1f33;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .breaking-news {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border: 1px solid #1c1f33;
+      font-family: "Playfair Display", serif;
+    }
+
+    .main-content {
+      display: flex;
+      margin-top: 1rem;
+    }
+
+    .articles {
+      flex: 3;
+      column-count: 2;
+      column-gap: 1rem;
+    }
+
+    .sidebar {
+      flex: 1;
+      margin-left: 1rem;
+      border-left: 1px solid #1c1f33;
+      padding-left: 1rem;
+    }
+
+    .news-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-image {
+      float: none;
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-image img {
+      width: 100%;
+      height: auto;
+      filter: grayscale(100%);
+    }
+
+    figcaption {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    p {
+      text-align: justify;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-item {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-item h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .joke-container {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .reveal-punchline {
+      background-color: #1c1f33;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin: 5px 0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .reveal-punchline:hover {
+      background-color: #3a3f66;
+    }
+    
+    .memory-container {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .memory-card {
+      aspect-ratio: 1;
+      background: #1c1f33;
+      color: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      transition: background-color 0.3s;
+    }
+
+    .memory-card.flipped {
+      background: #fff;
+      color: #1c1f33;
+      border: 1px solid #1c1f33;
+    }
+
+    #word-scramble input {
+      width: 100%;
+      padding: 5px;
+      margin: 5px 0;
+    }
+
+    #word-scramble button {
+      background: #1c1f33;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+
+    #word-result {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    /* Dark Mode Toggle Button Style */
+    #darkModeToggle {
+      background-color: #1c1f33;
+      color: white;
+      border: 1px solid #1c1f33;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-family: "EB Garamond", serif;
+      font-size: 0.9rem;
+      position: absolute; 
+      top: 1.25rem;        
+      right: 1.25rem;       
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    #darkModeToggle:hover {
+      background-color: #3a3f66;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background: #1e1e1e; /* Updated background */
+      color: #dcdcdc; /* Updated text color */
+      /* Ensure image background texture is removed in dark mode */
+    }
+
+    body.dark-mode header {
+      border-bottom: 2px solid #555; /* Updated border color */
+    }
+
+    body.dark-mode .issue-info {
+      color: #dcdcdc; /* Matches new body text color */
+    }
+
+    body.dark-mode .breaking-news {
+      border: 1px solid #555; /* Updated border color */
+      background-color: #2a2a2a; /* Updated background color */
+    }
+
+    body.dark-mode .sidebar {
+      border-left: 1px solid #555; /* Updated border color */
+    }
+    
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3 {
+      color: #ffffff; /* Brighter headings */
+    }
+
+    body.dark-mode p,
+    body.dark-mode ul,
+    body.dark-mode label,
+    body.dark-mode #quiz-result,
+    body.dark-mode #word-result,
+    body.dark-mode #scrambled-word {
+      color: #dcdcdc; /* Matches new body text color */
+    }
+
+    body.dark-mode figcaption {
+      color: #aaaaaa; /* Softer color for figcaptions */
+    }
+
+    body.dark-mode img {
+      filter: grayscale(100%); /* Changed to ensure all images are B&W in dark mode */
+    }
+    
+    /* The general img rule above will cover .news-image img as well.
+       If specific styling is needed for .news-image img, uncomment and adjust.
+    body.dark-mode .news-image img {
+      filter: grayscale(100%); /* Ensures news images are strictly B&W */
+    } */
+
+    body.dark-mode .joke-container {
+      background-color: #2a2a2a; /* Updated background color */
+    }
+
+    body.dark-mode .reveal-punchline {
+      background-color: #dcdcdc; /* Updated background */
+      color: #1e1e1e; /* Updated text color */
+      border: 1px solid #dcdcdc; /* Updated border */
+    }
+
+    body.dark-mode .reveal-punchline:hover {
+      background-color: #ffffff; /* Lighter hover for buttons */
+      color: #1e1e1e;
+    }
+
+    body.dark-mode .memory-card { /* Back of the card */
+      background: #dcdcdc; /* Light back for contrast */
+      color: transparent;
+    }
+
+    body.dark-mode .memory-card.flipped { /* Front of the card */
+      background: #2a2a2a; /* Updated background */
+      color: #dcdcdc; /* Updated text color */
+      border: 1px solid #555; /* Updated border */
+    }
+
+    body.dark-mode #word-scramble input {
+      background-color: #2a2a2a; /* Updated background */
+      color: #dcdcdc; /* Updated text color */
+      border: 1px solid #555; /* Updated border */
+    }
+    
+    body.dark-mode #word-scramble input::placeholder {
+      color: #777; /* Adjusted placeholder color for new background */
+    }
+
+    body.dark-mode #word-scramble button,
+    body.dark-mode #liminal-quiz button {
+      background-color: #dcdcdc; /* Updated background */
+      color: #1e1e1e; /* Updated text color */
+      border: 1px solid #dcdcdc; /* Updated border */
+    }
+
+    body.dark-mode #word-scramble button:hover,
+    body.dark-mode #liminal-quiz button:hover {
+      background-color: #ffffff; /* Lighter hover */
+      color: #1e1e1e;
+    }
+
+    body.dark-mode #darkModeToggle {
+      background-color: #dcdcdc; /* Updated background */
+      color: #1e1e1e; /* Updated text color */
+      border: 1px solid #dcdcdc; /* Updated border */
+    }
+
+    body.dark-mode #darkModeToggle:hover {
+      background-color: #ffffff; /* Lighter hover */
+      color: #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <header>
+    <h1>The Liminal Times</h1>
+    <div class="issue-info">
+      Issue #2 | Monday, October 14, 2024 | Liminal Spaces Edition
+    </div>
+    <button id="darkModeToggle">Switch to Dark Mode</button>
+  </header>
+
+  <div class="breaking-news">
+    <h3>Breaking News</h3>
+    <p>Researchers discover new type of liminal space in virtual reality environments. Details on page 2.</p>
+  </div>
+
+  <div class="main-content">
+    <div class="articles">
+      <section class="news-item clearfix">
+        <h2>The Philosophy of Liminality: Exploring In-Between Spaces</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1533619043865-1bf98a596a67?auto=format&amp;fit=crop&amp;w=600&amp;h=400&amp;q=80" alt="A dimly lit, long and narrow hallway with peeling wallpaper and an eerie atmosphere, embodying the essence of a liminal space" width="600" height="400">
+          <figcaption>The liminal space of a dark, mysterious hallway</figcaption>
+        </figure>
+        <p>In the realm of philosophy and anthropology, the concept of liminality has long fascinated scholars and thinkers. Derived from the Latin word 'limen,' meaning threshold, liminal spaces represent the ambiguous, in-between states that challenge our perceptions of reality and self.</p>
+        <p>Dr. Emma Thompson, a leading researcher in the field of liminal studies, explains: "Liminal spaces are transitional, threshold areas where the usual order of things is suspended. They're neither here nor there, betwixt and between. This ambiguity can evoke feelings of unease, but also possibility."</p>
+        <h3>The Power of Transition</h3>
+        <p>Liminal spaces often manifest physically as areas of transition: waiting rooms, empty parking lots, abandoned malls. But the concept extends beyond the physical, encompassing psychological and social transitions as well.</p>
+        <p>"Think about the state of being a teenager," Dr. Thompson continues. "It's a liminal period between childhood and adulthood, filled with uncertainty and potential. Or consider the moment just before falling asleep – you're neither fully conscious nor unconscious. These are liminal states."</p>
+        <h3>Liminality in Culture and Ritual</h3>
+        <p>Anthropologists have long recognized the importance of liminal phases in cultural rituals. Rites of passage often involve a period of liminality, where individuals are stripped of their old identity before assuming a new one.</p>
+        <p>Professor John Martinez, a cultural anthropologist, notes: "In many cultures, initiation rites involve a period where initiates are symbolically 'between' childhood and adulthood. This liminal phase is crucial for transformation and growth."</p>
+        <h3>The Appeal of Liminal Aesthetics</h3>
+        <p>In recent years, there's been a growing fascination with liminal spaces in art and popular culture. The "liminal aesthetics" movement celebrates the eerie beauty of transitional spaces, from empty airports to abandoned shopping malls.</p>
+        <p>"There's something compelling about these spaces," says art critic Lisa Chen. "They evoke a sense of nostalgia, unease, and possibility all at once. In a world that often feels oversaturated and overstimulating, liminal spaces offer a strange kind of peace."</p>
+        <h3>The Future of Liminality</h3>
+        <p>As our world becomes increasingly digital, new forms of liminal spaces are emerging. Virtual waiting rooms, loading screens, and the moments between video calls represent new frontiers in liminality.</p>
+        <p>"The concept of liminality is more relevant than ever," Dr. Thompson concludes. "In a world of rapid change and uncertainty, we're all inhabiting liminal spaces to some degree. Understanding and embracing liminality might be key to navigating our complex, evolving reality."</p>
+        <p>Recent studies have begun exploring the therapeutic potential of intentionally created liminal spaces in mental health treatment. "There's something about these transitional zones that allows people to process change and trauma differently," explains psychologist Dr. Rachel Cohen. "We're seeing promising results using virtual liminal environments as tools for exposure therapy and meditation practice."</p>
+      </section>
+
+      <section class="news-item clearfix">
+        <h2>Liminal Spaces in Architecture: Designing the In-Between</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&amp;fit=crop&amp;w=600&amp;h=400&amp;q=80" alt="Modern architectural space with blurred boundaries between inside and outside" width="600" height="400">
+          <figcaption>Blurring boundaries: Modern architecture embraces liminality</figcaption>
+        </figure>
+        <p>In the world of architecture, liminal spaces are gaining recognition as powerful design elements. These transitional areas – neither fully one thing nor another – are being intentionally incorporated into buildings to create unique experiences and challenge our perceptions of space.</p>
+        <h3>The Power of Thresholds</h3>
+        <p>Architect Maria Gonzalez explains: "Thresholds are the original liminal spaces in architecture. The space between inside and outside, public and private. We're now seeing designers play with these concepts on a larger scale."</p>
+        <p>Examples include the use of transparent or semi-transparent materials to blur the lines between interior and exterior, or the creation of spaces that transition gradually from one function to another.</p>
+        <h3>Liminal Spaces in Public Buildings</h3>
+        <p>Public buildings are incorporating liminal design to create more dynamic, flexible spaces. The new City Library features a "transitional reading room" that blends indoor and outdoor elements, creating a space that feels both enclosed and open.</p>
+        <p>"It's about creating spaces that can adapt and transform," says urban planner Tom Jackson. "Liminal spaces in public buildings can serve multiple functions and accommodate changing needs."</p>
+        <h3>The Future of Liminal Architecture</h3>
+        <p>As our understanding of liminal spaces grows, architects are pushing the boundaries of what's possible. From shape-shifting buildings to spaces that change with the time of day, the future of architecture might be more liminal than we ever imagined.</p>
+        <p>"Embracing liminality in architecture means embracing flexibility, ambiguity, and transformation," Gonzalez concludes. "It's an exciting time to be designing spaces."</p>
+        <p>The environmental impact of liminal design is also gaining attention. "These transitional spaces often require less energy to maintain and can help buffer between climate-controlled and natural environments," explains environmental engineer Dr. James Liu. "As we face climate challenges, liminal architecture could play a key role in sustainable building design."</p>
+      </section>
+
+      <section class="news-item clearfix">
+        <h2>Breaking: Local Teen Missing in Mysterious "Poolrooms" Incident</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1532187643603-ba119ca4109e?auto=format&fit=crop&w=300&h=200&q=80" alt="An eerie indoor pool with seemingly endless depths" width="300" height="200">
+          <figcaption>The infamous "Poolrooms" where the teen was last seen</figcaption>
+        </figure>
+        <p>Local authorities are investigating the mysterious disappearance of 17-year-old James Chen, who was last seen entering what witnesses describe as "The Poolrooms" - an anomalous space of endless indoor pools and tiled corridors. Chen has been missing for three weeks, with search efforts hampered by the seemingly infinite nature of the space.</p>
+        <p>"The water levels remain constant, despite no visible source. The humidity is oppressive, and the pools... they seem to go on forever," noted Detective Sarah Martinez. Search teams report disorientation and loss of direction after just hours of exploration.</p>
+        <p>Local paranormal investigator Maria Vasquez has joined the search efforts, bringing specialized equipment designed to detect spatial anomalies. "We're detecting unusual electromagnetic frequencies throughout The Poolrooms," Vasquez reports. "These readings suggest the space may be experiencing some form of dimensional instability."</p>
+      </section>
+
+      <section class="news-item clearfix">
+        <h2>The Science Behind The Poolrooms: A Hydro-Spatial Anomaly</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?auto=format&fit=crop&w=300&h=200&q=80" alt="Mysterious tiled corridors with standing water" width="300" height="200">
+          <figcaption>Research teams study the peculiar properties of Poolroom water</figcaption>
+        </figure>
+        <p>Dr. Marcus Wong, leading researcher at the Institute for Liminal Studies, has published preliminary findings on the unique properties of "The Poolrooms." Analysis reveals the water maintains a constant 72°F temperature and unusual chemical composition unlike any natural water source.</p>
+        <p>"The most fascinating aspect is how the space seems to fold back on itself. Our mapping attempts suggest a non-Euclidean geometry at play," explains Dr. Wong. His team continues to study this phenomenon while supporting ongoing search efforts.</p>
+        <p>Recent analysis of water samples from The Poolrooms has revealed traces of an unknown isotope that appears to defy conventional physics. "This could explain the spatial distortions we're observing," suggests Dr. Wong. "We're working with quantum physicists to understand how this isotope might be affecting local space-time geometry."</p>
+      </section>
+
+      <section class="news-item clearfix">
+        <h2>Poolrooms Research Team Reports Unusual Time Dilation Effects</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=300&h=200&q=80" alt="Scientific equipment monitoring an indoor pool" width="300" height="200">
+          <figcaption>Research equipment monitoring temporal anomalies in The Poolrooms</figcaption>
+        </figure>
+        <p>The research team studying The Poolrooms phenomenon has discovered concerning temporal irregularities within the space. Scientists report that time appears to flow differently in various sections of The Poolrooms, with some areas experiencing significant time dilation effects.</p>
+        <p>"We've observed that watches and electronic devices show inconsistent time measurements depending on their location within The Poolrooms," reports Dr. Sarah Chen, lead temporal physicist. "In some areas, minutes seem to stretch into hours, while in others, hours pass like minutes."</p>
+        <p>This discovery has added another layer of complexity to the search for James Chen, as rescue teams must now account for these temporal distortions in their search patterns. "We're having to completely rethink our search methodology," explains Search Coordinator Mark Thompson. "What feels like a one-hour search pattern might actually span several days in some areas."</p>
+      </section>
+
+      <section class="news-item clearfix">
+        <h2>Local Artist's Exhibition Features Poolrooms-Inspired Paintings</h2>
+        <figure class="news-image">
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112c4e5190?auto=format&fit=crop&w=300&h=200&q=80" alt="Abstract artwork featuring pools and reflections" width="300" height="200">
+          <figcaption>One of Maria García's haunting Poolrooms-inspired pieces</figcaption>
+        </figure>
+        <p>Local artist Maria García has unveiled a series of paintings inspired by The Poolrooms phenomenon, capturing the eerie beauty and unsettling nature of these mysterious spaces. The exhibition, titled "Echoes of the Infinite," has drawn significant attention from both art critics and paranormal enthusiasts.</p>
+        <p>"There's something about The Poolrooms that resonates with our deepest fears and fascinations," García explains. "The endless reflections, the play of light on water, the sense of being lost in space that's both familiar and alien - it's an artist's dream and nightmare combined."</p>
+        <p>The exhibition has gained unexpected attention from researchers studying The Poolrooms, who note that several of García's paintings seem to depict areas of The Poolrooms that haven't yet been documented. "It's as if she's tapping into some deeper truth about these spaces," suggests Dr. Wong. "We're currently investigating whether her artistic intuition might help guide our mapping efforts."</p>
+      </section>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-item">
+        <h3>Liminal Weather Report</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+          <li><strong>The Poolrooms:</strong> Endless humidity, water temp 72°F</li>
+          <li><strong>The Backrooms:</strong> Flickering fluorescent, 68°F</li>
+          <li><strong>Crossroads Mall:</strong> Partly dusty, 65°F indoors</li>
+        </ul>
+      </div>
+      <div class="sidebar-item">
+        <h3>Liminal Space of the Day</h3>
+        <p>Today's featured liminal space: The empty school hallway during summer break.</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Liminal Facts</h3>
+        <ul style="padding-left: 20px;">
+          <li>The word "liminal" comes from the Latin word "limen," meaning threshold.</li>
+          <li>Liminal spaces often evoke a feeling of being "unstuck in time." </li>
+          <li>In psychology, liminality is associated with disorientation and a loss of social bearings.</li>
+          <li>Some consider dreams to be a form of liminal space between waking and sleeping.</li>
+        </ul>
+      </div>
+      <div class="sidebar-item">
+        <h3>Quote of the Day</h3>
+        <p>"In the liminal space between what was and what will be, there is infinite possibility." - Unknown</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Advertisement</h3>
+        <figure style="margin: 0; padding: 0;">
+          <img src="https://images.unsplash.com/photo-1584636778264-74ef0c7d45fb?auto=format&amp;fit=crop&amp;w=300&amp;h=533&amp;q=80" alt="Vintage 1950s comic-style advertisement for Spirit Talkie-Walkies, featuring a wide-eyed boy using a retro walkie-talkie with ghostly apparitions emerging from it" width="300" height="533" style="width: 100%; height: auto; max-width: 300px; border: 1px solid #1c1f33;">
+          <figcaption style="font-style: italic; font-size: 0.8rem; text-align: center;">
+            Spirit Talkie-Walkies - Communicate with the Beyond!
+          </figcaption>
+        </figure>
+        <p style="font-family: 'Playfair Display', serif; font-size: 0.9rem; text-align: center; margin-top: 0.5rem;">
+          Talk to departed loved ones!<br>
+          Explore the ultimate liminal space!<br>
+          Only $19.95 + S&amp;H<br>
+          Order now from ACME Paranormal!
+        </p>
+      </div>
+      <div class="sidebar-item joke-container">
+        <h3>Liminal Joke of the Day</h3>
+        <p class="joke-setup">Why did the liminal space enthusiast get stuck in the elevator?</p>
+        <button class="reveal-punchline">Click for punchline</button>
+        <p class="joke-punchline" style="display: none;">He couldn't decide whether to go up or down!</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Did You Know?</h3>
+        <p>The concept of liminal spaces extends beyond physical locations. In literature and film, liminal spaces often serve as portals between worlds or states of being. For example, the wardrobe in C.S. Lewis's "The Lion, the Witch and the Wardrobe" acts as a liminal space between our world and Narnia, embodying the transition between reality and fantasy.</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Letters To The Editor</h3>
+        <p>Dear Editor,<br>
+        I recently stumbled upon an online phenomenon known as "the poolrooms" and I couldn't stop thinking about it. These liminal spaces, with their endless tiled corridors and impossibly deep, blue waters, perfectly capture the eerie beauty of transitional spaces. I find myself both unsettled and oddly comforted by these images. Have you considered doing a feature on digital liminal spaces like the poolrooms?<br>
+        Sincerely,<br>
+        A Fascinated Reader</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Quote of the Day</h3>
+        <p>"The most beautiful thing we can experience is the mysterious." - Albert Einstein</p>
+      </div>
+      <div class="sidebar-item">
+        <h3>Liminal Space Quiz</h3>
+        <form id="liminal-quiz">
+          <div style="margin-bottom: 15px;">
+            <p><strong>1. Which of these is NOT typically considered a liminal space?</strong></p>
+            <label><input type="radio" name="q1" value="a"> a) Airport terminal</label><br>
+            <label><input type="radio" name="q1" value="b"> b) Empty parking lot</label><br>
+            <label><input type="radio" name="q1" value="c"> c) Busy city street</label><br>
+            <label><input type="radio" name="q1" value="d"> d) Hotel corridor</label>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <p><strong>2. What feeling is often associated with liminal spaces?</strong></p>
+            <label><input type="radio" name="q2" value="a"> a) Excitement</label><br>
+            <label><input type="radio" name="q2" value="b"> b) Nostalgia</label><br>
+            <label><input type="radio" name="q2" value="c"> c) Unease</label><br>
+            <label><input type="radio" name="q2" value="d"> d) Joy</label>
+          </div>
+          <button type="submit" style="background-color: #1c1f33; color: white; border: none; padding: 10px 20px; cursor: pointer;">Submit Answers</button>
+        </form>
+        <div id="quiz-result" style="margin-top: 15px; font-weight: bold;"></div>
+      </div>
+      <div class="sidebar-item">
+        <h3>Word Scramble: Liminal Edition</h3>
+        <div id="word-scramble">
+          <p>Unscramble this liminal word: <span id="scrambled-word">LINTAOGNS</span></p>
+          <input type="text" id="word-guess" placeholder="Enter your guess">
+          <button id="check-word">Check Answer</button>
+          <p id="word-result"></p>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <h3>Memory Match</h3>
+        <div id="memory-game" class="memory-container">
+          <div class="memory-grid"></div>
+          <p>Matches: <span id="match-count">0</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const jokeContainer = document.querySelector('.joke-container');
+    const revealButton = jokeContainer.querySelector('.reveal-punchline');
+    const punchline = jokeContainer.querySelector('.joke-punchline');
+
+    revealButton.addEventListener('click', function() {
+      punchline.style.display = 'block';
+      gsap.from(punchline, {duration: 0.5, opacity: 0, y: 20, ease: "power2.out"});
+      revealButton.style.display = 'none';
+    });
+  });
+</script>
+
+<script>
+  document.getElementById('liminal-quiz').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+  
+    if (q1 && q1.value === 'c') score++;
+    if (q2 && q2.value === 'c') score++; 
+  
+    document.getElementById('quiz-result').textContent = `You scored ${score} out of 2!`;
+  });
+</script>
+
+<script>
+  // Word Scramble Game
+  const words = ['NOSTALGIA', 'THRESHOLD', 'TEMPORAL', 'INFINITE', 'TWILIGHT'];
+  let currentWord = '';
+
+  function scrambleWord(word) {
+    return word.split('').sort(() => Math.random() - 0.5).join('');
+  }
+
+  function initWordScramble() {
+    currentWord = words[Math.floor(Math.random() * words.length)];
+    document.getElementById('scrambled-word').textContent = scrambleWord(currentWord);
+    document.getElementById('word-guess').value = '';
+    document.getElementById('word-result').textContent = '';
+  }
+
+  document.getElementById('check-word').addEventListener('click', function() {
+    const guess = document.getElementById('word-guess').value.toUpperCase();
+    const result = document.getElementById('word-result');
+    
+    if (guess === currentWord) {
+      result.textContent = 'Correct! Well done!';
+      setTimeout(initWordScramble, 2000);
+    } else {
+      result.textContent = 'Try again!';
+    }
+  });
+
+  initWordScramble();
+
+  // Memory Match Game
+  const symbols = ['☆', '♢', '♡', '♧', '※', '◇'];
+  let cards = [...symbols, ...symbols];
+  let flippedCards = [];
+  let matchedPairs = 0;
+
+  function shuffleCards() {
+    cards.sort(() => Math.random() - 0.5);
+    matchedPairs = 0;
+    document.getElementById('match-count').textContent = '0';
+    
+    const grid = document.querySelector('.memory-grid');
+    grid.innerHTML = '';
+    
+    cards.forEach((symbol, index) => {
+      const card = document.createElement('div');
+      card.classList.add('memory-card');
+      card.dataset.symbol = symbol;
+      card.dataset.index = index;
+      card.addEventListener('click', flipCard);
+      grid.appendChild(card);
+    });
+  }
+
+  function flipCard() {
+    if (flippedCards.length === 2) return;
+    if (this.classList.contains('flipped')) return;
+    
+    this.classList.add('flipped');
+    this.textContent = this.dataset.symbol;
+    flippedCards.push(this);
+    
+    if (flippedCards.length === 2) {
+      setTimeout(checkMatch, 500);
+    }
+  }
+
+  function checkMatch() {
+    const [card1, card2] = flippedCards;
+    if (card1.dataset.symbol === card2.dataset.symbol) {
+      matchedPairs++;
+      document.getElementById('match-count').textContent = matchedPairs;
+      if (matchedPairs === symbols.length) {
+        setTimeout(() => {
+          alert('Congratulations! You found all matches!');
+          shuffleCards();
+        }, 500);
+      }
+    } else {
+      card1.classList.remove('flipped');
+      card2.classList.remove('flipped');
+      card1.textContent = '';
+      card2.textContent = '';
+    }
+    flippedCards = [];
+  }
+
+  shuffleCards();
+</script>
+
+<script>
+  // Dark Mode Toggle Script
+  document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Function to enable dark mode
+    const enableDarkMode = () => {
+        body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+        if (darkModeToggle) { 
+            darkModeToggle.textContent = 'Switch to Light Mode';
+        }
+    };
+
+    // Function to disable dark mode
+    const disableDarkMode = () => {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+        if (darkModeToggle) { 
+            darkModeToggle.textContent = 'Switch to Dark Mode';
+        }
+    };
+
+    // Check localStorage for saved preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        enableDarkMode();
+    } else {
+        // Default to light mode, ensure button text is correct if button exists
+        if (darkModeToggle) {
+            darkModeToggle.textContent = 'Switch to Dark Mode';
+        }
+    }
+
+    // Toggle dark mode on button click
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+    }
+  });
+</script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
