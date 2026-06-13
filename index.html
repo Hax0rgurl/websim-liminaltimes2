@@ -1,6 +1,5 @@
-<html>
+<html lang="en">
 <head>
-  <base href="https://theliminaltimes/issue2">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Liminal Times - Issue #2 - Exploring Abandoned and Liminal Spaces</title>
@@ -8,109 +7,196 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@700&display=swap');
 
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: hidden;
+    }
+
     body {
+      margin: 0;
       font-family: "EB Garamond", serif;
       background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/paper_fibers.png) repeat;
       color: #1c1f33;
-      line-height: 1.3;
+      line-height: 1.35;
       cursor: default;
       transition: background-color 0.3s, color 0.3s;
     }
 
     .container-fluid {
-      max-width: 1200px;
-      margin: auto;
-      padding: 0.5rem;
+      width: min(100%, 1180px);
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(14px, 2.4vw, 30px);
     }
 
     header {
-      padding: 0.5rem 0;
+      position: relative;
+      padding: 0.75rem 8rem 0.75rem 0;
       text-align: center;
       border-bottom: 2px solid #1c1f33;
-      position: relative; 
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Playfair Display", serif;
+      line-height: 1.05;
     }
 
     h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 3rem;
+      font-size: clamp(2.4rem, 6vw, 4.25rem);
       margin-bottom: 0.25rem;
     }
 
+    h2 {
+      font-size: clamp(1.35rem, 2vw, 1.75rem);
+      margin-bottom: 0.65rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
     .issue-info {
-      font-size: 1rem;
+      font-size: clamp(0.86rem, 1.6vw, 1.05rem);
       color: #1c1f33;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.04em;
+    }
+
+    #darkModeToggle {
+      position: absolute;
+      top: 1rem;
+      right: 0;
+      max-width: 7.5rem;
+      background-color: #1c1f33;
+      color: white;
+      border: 1px solid #1c1f33;
+      padding: 0.45rem 0.7rem;
+      cursor: pointer;
+      font-family: "EB Garamond", serif;
+      font-size: 0.9rem;
+      line-height: 1.1;
+      white-space: normal;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    #darkModeToggle:hover,
+    .reveal-punchline:hover,
+    #word-scramble button:hover,
+    #liminal-quiz button:hover {
+      background-color: #3a3f66;
     }
 
     .breaking-news {
-      padding: 0.5rem;
-      margin: 0.5rem 0;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
       border: 1px solid #1c1f33;
       font-family: "Playfair Display", serif;
     }
 
+    .breaking-news p,
+    .breaking-news h3 {
+      margin-bottom: 0;
+    }
+
     .main-content {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+      gap: clamp(1rem, 2.2vw, 1.75rem);
+      align-items: start;
       margin-top: 1rem;
     }
 
     .articles {
-      flex: 3;
-      column-count: 2;
-      column-gap: 1rem;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.35rem 1.5rem;
     }
 
     .sidebar {
-      flex: 1;
-      margin-left: 1rem;
+      min-width: 0;
       border-left: 1px solid #1c1f33;
-      padding-left: 1rem;
+      padding-left: clamp(0.9rem, 2vw, 1.25rem);
+    }
+
+    .news-item,
+    .sidebar-item {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .news-item {
-      break-inside: avoid;
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-family: "Playfair Display", serif;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .news-image {
-      float: none;
+      display: block;
+      width: 100%;
       max-width: 100%;
-      margin-right: 0;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.65rem;
     }
 
-    .news-image img {
+    .news-image img,
+    .sidebar-item figure img {
+      display: block;
       width: 100%;
+      max-width: 100%;
+      aspect-ratio: 3 / 2;
+      min-height: 8rem;
       height: auto;
+      object-fit: cover;
       filter: grayscale(100%);
+      border: 1px solid rgba(28, 31, 51, 0.35);
+      background-color: rgba(28, 31, 51, 0.08);
+      color: transparent;
+      font-size: 0;
+      overflow: hidden;
+    }
+
+    .sidebar-item figure img {
+      aspect-ratio: 3 / 4;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .image-fallback {
+      display: grid;
+      width: 100%;
+      min-height: 8rem;
+      padding: 1rem;
+      place-items: center;
+      border: 1px solid rgba(28, 31, 51, 0.35);
+      background: repeating-linear-gradient(135deg, #d9d6cc 0 10px, #c8c4b8 10px 20px);
+      color: #555;
+      font-style: italic;
+      text-align: center;
     }
 
     figcaption {
       font-style: italic;
       font-size: 0.9rem;
-      margin-top: 0.25rem;
+      line-height: 1.2;
+      margin-top: 0.35rem;
     }
 
     p {
-      text-align: justify;
-      margin-bottom: 0.5rem;
+      text-align: left;
+      margin-bottom: 0.65rem;
+      overflow-wrap: anywhere;
+    }
+
+    ul {
+      overflow-wrap: anywhere;
     }
 
     .sidebar-item {
-      margin-bottom: 1rem;
-    }
-
-    .sidebar-item h3 {
-      font-family: "Playfair Display", serif;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.15rem;
     }
 
     .joke-container {
@@ -119,20 +205,17 @@
       border-radius: 5px;
     }
 
-    .reveal-punchline {
+    .reveal-punchline,
+    #word-scramble button,
+    #liminal-quiz button {
       background-color: #1c1f33;
       color: white;
       border: none;
-      padding: 5px 10px;
-      margin: 5px 0;
+      padding: 6px 11px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
-    .reveal-punchline:hover {
-      background-color: #3a3f66;
-    }
-    
     .memory-container {
       width: 100%;
       max-width: 300px;
@@ -169,150 +252,128 @@
       margin: 5px 0;
     }
 
-    #word-scramble button {
-      background: #1c1f33;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin: 5px 0;
-    }
-
     #word-result {
       margin-top: 5px;
       font-weight: bold;
     }
 
-    /* Dark Mode Toggle Button Style */
-    #darkModeToggle {
-      background-color: #1c1f33;
-      color: white;
-      border: 1px solid #1c1f33;
-      padding: 8px 15px;
-      cursor: pointer;
-      font-family: "EB Garamond", serif;
-      font-size: 0.9rem;
-      position: absolute; 
-      top: 1.25rem;        
-      right: 1.25rem;       
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
-
-    #darkModeToggle:hover {
-      background-color: #3a3f66;
-    }
-
-    /* Dark Mode Styles */
     body.dark-mode {
-      background: #1e1e1e; /* Updated background */
-      color: #dcdcdc; /* Updated text color */
-      /* Ensure image background texture is removed in dark mode */
+      background: #1e1e1e;
+      color: #dcdcdc;
     }
 
     body.dark-mode header {
-      border-bottom: 2px solid #555; /* Updated border color */
+      border-bottom: 2px solid #555;
     }
 
-    body.dark-mode .issue-info {
-      color: #dcdcdc; /* Matches new body text color */
-    }
-
-    body.dark-mode .breaking-news {
-      border: 1px solid #555; /* Updated border color */
-      background-color: #2a2a2a; /* Updated background color */
-    }
-
-    body.dark-mode .sidebar {
-      border-left: 1px solid #555; /* Updated border color */
-    }
-    
-    body.dark-mode h1,
-    body.dark-mode h2,
-    body.dark-mode h3 {
-      color: #ffffff; /* Brighter headings */
-    }
-
+    body.dark-mode .issue-info,
     body.dark-mode p,
     body.dark-mode ul,
     body.dark-mode label,
     body.dark-mode #quiz-result,
     body.dark-mode #word-result,
     body.dark-mode #scrambled-word {
-      color: #dcdcdc; /* Matches new body text color */
+      color: #dcdcdc;
+    }
+
+    body.dark-mode .breaking-news,
+    body.dark-mode .joke-container {
+      border-color: #555;
+      background-color: #2a2a2a;
+    }
+
+    body.dark-mode .sidebar {
+      border-left-color: #555;
+    }
+
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3 {
+      color: #ffffff;
     }
 
     body.dark-mode figcaption {
-      color: #aaaaaa; /* Softer color for figcaptions */
+      color: #aaaaaa;
     }
 
     body.dark-mode img {
-      filter: grayscale(100%); /* Changed to ensure all images are B&W in dark mode */
-    }
-    
-    /* The general img rule above will cover .news-image img as well.
-       If specific styling is needed for .news-image img, uncomment and adjust.
-    body.dark-mode .news-image img {
-      filter: grayscale(100%); /* Ensures news images are strictly B&W */
-    } */
-
-    body.dark-mode .joke-container {
-      background-color: #2a2a2a; /* Updated background color */
+      filter: grayscale(100%);
     }
 
-    body.dark-mode .reveal-punchline {
-      background-color: #dcdcdc; /* Updated background */
-      color: #1e1e1e; /* Updated text color */
-      border: 1px solid #dcdcdc; /* Updated border */
+    body.dark-mode .image-fallback {
+      border-color: #666;
+      background: repeating-linear-gradient(135deg, #2f2f2f 0 10px, #242424 10px 20px);
+      color: #dcdcdc;
     }
 
-    body.dark-mode .reveal-punchline:hover {
-      background-color: #ffffff; /* Lighter hover for buttons */
+    body.dark-mode .reveal-punchline,
+    body.dark-mode #word-scramble button,
+    body.dark-mode #liminal-quiz button,
+    body.dark-mode #darkModeToggle {
+      background-color: #dcdcdc;
+      color: #1e1e1e;
+      border: 1px solid #dcdcdc;
+    }
+
+    body.dark-mode .reveal-punchline:hover,
+    body.dark-mode #word-scramble button:hover,
+    body.dark-mode #liminal-quiz button:hover,
+    body.dark-mode #darkModeToggle:hover {
+      background-color: #ffffff;
       color: #1e1e1e;
     }
 
-    body.dark-mode .memory-card { /* Back of the card */
-      background: #dcdcdc; /* Light back for contrast */
+    body.dark-mode .memory-card {
+      background: #dcdcdc;
       color: transparent;
     }
 
-    body.dark-mode .memory-card.flipped { /* Front of the card */
-      background: #2a2a2a; /* Updated background */
-      color: #dcdcdc; /* Updated text color */
-      border: 1px solid #555; /* Updated border */
+    body.dark-mode .memory-card.flipped {
+      background: #2a2a2a;
+      color: #dcdcdc;
+      border: 1px solid #555;
     }
 
     body.dark-mode #word-scramble input {
-      background-color: #2a2a2a; /* Updated background */
-      color: #dcdcdc; /* Updated text color */
-      border: 1px solid #555; /* Updated border */
+      background-color: #2a2a2a;
+      color: #dcdcdc;
+      border: 1px solid #555;
     }
-    
+
     body.dark-mode #word-scramble input::placeholder {
-      color: #777; /* Adjusted placeholder color for new background */
+      color: #777;
     }
 
-    body.dark-mode #word-scramble button,
-    body.dark-mode #liminal-quiz button {
-      background-color: #dcdcdc; /* Updated background */
-      color: #1e1e1e; /* Updated text color */
-      border: 1px solid #dcdcdc; /* Updated border */
+    @media (max-width: 980px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-left: 0;
+        border-top: 1px solid #1c1f33;
+        padding-left: 0;
+        padding-top: 1rem;
+      }
+
+      body.dark-mode .sidebar {
+        border-top-color: #555;
+      }
     }
 
-    body.dark-mode #word-scramble button:hover,
-    body.dark-mode #liminal-quiz button:hover {
-      background-color: #ffffff; /* Lighter hover */
-      color: #1e1e1e;
-    }
+    @media (max-width: 720px) {
+      header {
+        padding: 3.1rem 0 0.8rem;
+      }
 
-    body.dark-mode #darkModeToggle {
-      background-color: #dcdcdc; /* Updated background */
-      color: #1e1e1e; /* Updated text color */
-      border: 1px solid #dcdcdc; /* Updated border */
-    }
+      #darkModeToggle {
+        top: 0;
+        right: 0;
+      }
 
-    body.dark-mode #darkModeToggle:hover {
-      background-color: #ffffff; /* Lighter hover */
-      color: #1e1e1e;
+      .articles {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -344,7 +405,7 @@
         <p>Dr. Emma Thompson, a leading researcher in the field of liminal studies, explains: "Liminal spaces are transitional, threshold areas where the usual order of things is suspended. They're neither here nor there, betwixt and between. This ambiguity can evoke feelings of unease, but also possibility."</p>
         <h3>The Power of Transition</h3>
         <p>Liminal spaces often manifest physically as areas of transition: waiting rooms, empty parking lots, abandoned malls. But the concept extends beyond the physical, encompassing psychological and social transitions as well.</p>
-        <p>"Think about the state of being a teenager," Dr. Thompson continues. "It's a liminal period between childhood and adulthood, filled with uncertainty and potential. Or consider the moment just before falling asleep – you're neither fully conscious nor unconscious. These are liminal states."</p>
+        <p>"Think about the state of being a teenager," Dr. Thompson continues. "It's a liminal period between childhood and adulthood, filled with uncertainty and potential. Or consider the moment just before falling asleep - you're neither fully conscious nor unconscious. These are liminal states."</p>
         <h3>Liminality in Culture and Ritual</h3>
         <p>Anthropologists have long recognized the importance of liminal phases in cultural rituals. Rites of passage often involve a period of liminality, where individuals are stripped of their old identity before assuming a new one.</p>
         <p>Professor John Martinez, a cultural anthropologist, notes: "In many cultures, initiation rites involve a period where initiates are symbolically 'between' childhood and adulthood. This liminal phase is crucial for transformation and growth."</p>
@@ -363,7 +424,7 @@
           <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&amp;fit=crop&amp;w=600&amp;h=400&amp;q=80" alt="Modern architectural space with blurred boundaries between inside and outside" width="600" height="400">
           <figcaption>Blurring boundaries: Modern architecture embraces liminality</figcaption>
         </figure>
-        <p>In the world of architecture, liminal spaces are gaining recognition as powerful design elements. These transitional areas – neither fully one thing nor another – are being intentionally incorporated into buildings to create unique experiences and challenge our perceptions of space.</p>
+        <p>In the world of architecture, liminal spaces are gaining recognition as powerful design elements. These transitional areas - neither fully one thing nor another - are being intentionally incorporated into buildings to create unique experiences and challenge our perceptions of space.</p>
         <h3>The Power of Thresholds</h3>
         <p>Architect Maria Gonzalez explains: "Thresholds are the original liminal spaces in architecture. The space between inside and outside, public and private. We're now seeing designers play with these concepts on a larger scale."</p>
         <p>Examples include the use of transparent or semi-transparent materials to blur the lines between interior and exterior, or the creation of spaces that transition gradually from one function to another.</p>
@@ -500,7 +561,7 @@
             <label><input type="radio" name="q2" value="c"> c) Unease</label><br>
             <label><input type="radio" name="q2" value="d"> d) Joy</label>
           </div>
-          <button type="submit" style="background-color: #1c1f33; color: white; border: none; padding: 10px 20px; cursor: pointer;">Submit Answers</button>
+          <button type="submit">Submit Answers</button>
         </form>
         <div id="quiz-result" style="margin-top: 15px; font-weight: bold;"></div>
       </div>
@@ -529,6 +590,22 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('img').forEach(function(img) {
+      function replaceBrokenImage() {
+        const fallback = document.createElement('div');
+        fallback.className = 'image-fallback';
+        fallback.setAttribute('role', 'img');
+        fallback.setAttribute('aria-label', img.alt || 'Image unavailable');
+        fallback.textContent = 'Image unavailable';
+        img.replaceWith(fallback);
+      }
+
+      img.addEventListener('error', replaceBrokenImage, { once: true });
+      if (img.complete && img.naturalWidth === 0) {
+        replaceBrokenImage();
+      }
+    });
+
     const jokeContainer = document.querySelector('.joke-container');
     const revealButton = jokeContainer.querySelector('.reveal-punchline');
     const punchline = jokeContainer.querySelector('.joke-punchline');
@@ -556,7 +633,6 @@
 </script>
 
 <script>
-  // Word Scramble Game
   const words = ['NOSTALGIA', 'THRESHOLD', 'TEMPORAL', 'INFINITE', 'TWILIGHT'];
   let currentWord = '';
 
@@ -585,7 +661,6 @@
 
   initWordScramble();
 
-  // Memory Match Game
   const symbols = ['☆', '♢', '♡', '♧', '※', '◇'];
   let cards = [...symbols, ...symbols];
   let flippedCards = [];
@@ -646,51 +721,42 @@
 </script>
 
 <script>
-  // Dark Mode Toggle Script
   document.addEventListener('DOMContentLoaded', () => {
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
 
-    // Function to enable dark mode
     const enableDarkMode = () => {
-        body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-        if (darkModeToggle) { 
-            darkModeToggle.textContent = 'Switch to Light Mode';
-        }
+      body.classList.add('dark-mode');
+      localStorage.setItem('darkMode', 'enabled');
+      if (darkModeToggle) {
+        darkModeToggle.textContent = 'Switch to Light Mode';
+      }
     };
 
-    // Function to disable dark mode
     const disableDarkMode = () => {
-        body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-        if (darkModeToggle) { 
-            darkModeToggle.textContent = 'Switch to Dark Mode';
-        }
+      body.classList.remove('dark-mode');
+      localStorage.setItem('darkMode', 'disabled');
+      if (darkModeToggle) {
+        darkModeToggle.textContent = 'Switch to Dark Mode';
+      }
     };
 
-    // Check localStorage for saved preference
     if (localStorage.getItem('darkMode') === 'enabled') {
-        enableDarkMode();
-    } else {
-        // Default to light mode, ensure button text is correct if button exists
-        if (darkModeToggle) {
-            darkModeToggle.textContent = 'Switch to Dark Mode';
-        }
+      enableDarkMode();
+    } else if (darkModeToggle) {
+      darkModeToggle.textContent = 'Switch to Dark Mode';
     }
 
-    // Toggle dark mode on button click
     if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', () => {
-            if (body.classList.contains('dark-mode')) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
-        });
+      darkModeToggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+          disableDarkMode();
+        } else {
+          enableDarkMode();
+        }
+      });
     }
   });
 </script>
-
 </body>
 </html>
