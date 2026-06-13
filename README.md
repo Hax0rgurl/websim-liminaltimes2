@@ -4,7 +4,7 @@ A static GitHub Pages version of **The Liminal Times**.
 
 ## Live Page
 
-[Open the website](https://hax0rgurl.github.io/websim-liminaltimes2/)
+[Open the website](https://hax0rgurl.github.io/liminaltimes2/)
 
 <p>
   <a href="https://hax0rgurl.github.io/liminaltimes2/">
